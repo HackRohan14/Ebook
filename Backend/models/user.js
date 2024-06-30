@@ -1,6 +1,13 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+
 const user = new mongoose.Schema({
     username :{
+        type:String,
+        required:true,
+        unique:true
+    },
+    email:{
         type:String,
         required:true,
         unique:true
@@ -22,18 +29,19 @@ const user = new mongoose.Schema({
         default:"user",
         enum:["user","admin"]
     },
-    favorites:[{type:mongoose.type.ObjectId,
+    favorites:[{
+        type:mongoose.Types.ObjectId,
         ref:"books",
     }
     ],
-    cart:[{type:mongoose.type.ObjectId,
+    cart:[{type:mongoose.Types.ObjectId,
         ref:"books",
         }],
     orders:[{
-        type:mongoose.type.ObjectId,
+        type:mongoose.Types.ObjectId,
         ref:"order",
     }],
     },
     {timestamps:true},
 );
-const express=mongoose.model("user",user);
+module.exports=mongoose.model("user",user);
