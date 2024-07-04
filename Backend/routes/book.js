@@ -59,6 +59,43 @@ router.delete("/delete-book",authenticateToken,async (req,res)=>{
     }
 
 });
+
+//get all books
+router.get("/get-all-books",async (req,res)=>{
+    try{
+        const books = await Book.find().sort({createdAt:-1});
+        res.status(200).json({books},{message:"Sucess"});
+    }
+    catch(err){
+        res.status(500).json({message:"Internal Server Error"});
+    }
+});
+
+//get recent 4 books
+router.get("/get-all-books",async (req,res)=>{
+    try{
+        const books = await Book.find().sort({createdAt:-1}).limit(4);
+        res.status(200).json({books},{message:"Sucess"});
+    }
+    catch(err){
+        res.status(500).json({message:"Internal Server Error"});
+    }
+});
+
+
+
+//get detail of a particular book
+router.get("/get-book-by-id/:id",async (req,res)=>{
+    try{
+        const {id} = req.params;
+        const book = await Book.findById(id);
+        res.status(200).json({book},{message:"Sucess"});
+        }
+        catch(err){
+            res.status(500).json({message:"Internal Server Error"});
+            }
+});
+
 module.export=router;
 
 
