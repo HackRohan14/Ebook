@@ -8,4 +8,4 @@ function AllBooks() {
   )
 }
 
-export default AllBooks
+export default AllBooks;
