@@ -1,11 +1,12 @@
 const router=require("express").Router();
 const {User}=require("../models/user");
-const {authenticateToken} = require("./userauth");
+const authenticateToken = require("./userauth");
 
 //add book to favorite
-router.post("/addbook",authenticateToken,async (req,res)=>{
+router.post("/addbook", authenticateToken ,async (req,res)=>{
+    try{
     const {bookid,id}=req.headers;
-    const userdata=await user.findById(id);
+    const userdata=await User.findById(id);
     const isbookfavorite = userdata.favourites.includes(bookid);
     if(isbookfavorite){
         res.status(400).send("Book already in favorites");
@@ -14,6 +15,10 @@ router.post("/addbook",authenticateToken,async (req,res)=>{
         userdata.favourites.push(bookid);
         userdata.save();
         res.status(200).send("Book added to favorites");
+    }}
+    catch(error){
+        console.log("error");
+        res.status(500).json({messgage:"internal Server Error"});
     }
 });
 

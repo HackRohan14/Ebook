@@ -9,6 +9,7 @@ import Cart from "./pages/Cart";
 
 import {BrowserRouter as Router,Routes,Route} from "react-router-dom";
 import Profile from './pages/Profile';
+import ViewBookDetails from './components/ViewBookDetails/ViewBookDetails';
 function App() {
 
   return (
@@ -22,6 +23,7 @@ function App() {
                 <Route path="/Login"  element={<Login/>}/>
                 <Route path="/Cart" element={<Cart/>}/>  
                 <Route path="/Profile" element={<Profile/>}/>
+                <Route path="view-book-details/:id" element={<ViewBookDetails/>} />
               </Routes>
       <Footer/>
       </Router>

@@ -29,19 +29,21 @@ const Navbar=()=>{
             <div className="flex">
                 <div className="text-2xl font-semibold">BookHeaven</div>
             </div>
-            <div className=" hidden md:flex nav-links-bookheaven gap-4">
-                {
-                    links.map((items,i)=>(
-                    <Link  to={items.link} key={i} >{items.title}</Link>
-                ))}
-                <div className="md:flex gap-4">
-                    <Link to="/Login" className="border px-4 border-white-500 hover:bg-zinc-700 transition:all duration-300 rounded">Login</Link>
-                    <Link to="/SignUp" className="border px-4 border-white-500 bg-blue-500 rounded hover:bg-zinc-600 transition:all duration-300">Sign Up</Link>
+            <div className="flex gap-4">
+                <div className=" hidden md:flex nav-links-bookheaven gap-4">
+                    {
+                        links.map((items,i)=>(
+                        <Link  to={items.link} key={i} >{items.title}</Link>
+                    ))}
+                    <div className=" md:flex gap-4">
+                        <Link to="/Login" className="border px-4 border-white-500 hover:bg-zinc-700 transition:all duration-300 rounded">Login</Link>
+                        <Link to="/SignUp" className="border px-4 border-white-500 bg-blue-500 rounded hover:bg-zinc-600 transition:all duration-300">Sign Up</Link>
+                    </div>
                 </div>
+                    <button className= "lg:hidden text-white text-2xl hover:text-zinc-400" onClick={()=>(mobileNav==="hidden" ? setMobileNav("block") : setMobileNav("hidden"))}>
+                            <FaGripLines />
+                    </button>
             </div>
-            <button className="text-white text-2xl hover:text-zinc-400" onClick={()=>(mobileNav==="hidden" ? setMobileNav("block") : setMobileNav("hidden"))}>
-                        <FaGripLines />
-                </button>
     </nav>
     <div className={`${mobileNav} bg-zinc-800 h-screen absolute top-0 left-0 w-full flex flex-col items-center justify-center`}>
     {links.map((items,i)=>(

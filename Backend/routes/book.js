@@ -18,7 +18,7 @@ router.post("/addbook",authenticateToken,async(req,res)=>{
             url:req.body.url,
             title:req.body.title,
             author:req.body.author,
-            description:req.body.description,
+            desc:req.body.desc,
             image:req.body.image,
             price:req.body.price,
             language:req.body.language,
@@ -60,22 +60,23 @@ router.delete("/delete-book",authenticateToken,async (req,res)=>{
 
 });
 
-//get all books
-router.get("/get-all-books",async (req,res)=>{
-    try{
-        const books = await Book.find().sort({createdAt:-1});
-        res.status(200).json({books},{message:"Sucess"});
-    }
-    catch(err){
-        res.status(500).json({message:"Internal Server Error"});
+// get all books
+router.get("/get-all-books", async (req, res) => {
+    try {
+        const books = await Book.find().sort({ createdAt: -1 });
+        res.status(200).json({ books, message: "Success" }); // Correctly structured response
+    } catch (err) {
+        console.error("Error fetching books:", err);
+        res.status(500).json({ message: "Internal Server Error" }); // Proper error response
     }
 });
 
+
 //get recent 4 books
-router.get("/get-all-books",async (req,res)=>{
+router.get("/get-recent-books",async (req,res)=>{
     try{
         const books = await Book.find().sort({createdAt:-1}).limit(4);
-        res.status(200).json({books},{message:"Sucess"});
+        res.status(200).json({books});
     }
     catch(err){
         res.status(500).json({message:"Internal Server Error"});
@@ -89,7 +90,10 @@ router.get("/get-book-by-id/:id",async (req,res)=>{
     try{
         const {id} = req.params;
         const book = await Book.findById(id);
-        res.status(200).json({book},{message:"Sucess"});
+        if(!book){
+            return res.status(400).json({message:"book Not Found"});
+        }
+        res.status(200).json({book,message:"Sucess"});
         }
         catch(err){
             res.status(500).json({message:"Internal Server Error"});
