@@ -3,6 +3,8 @@ import {Link} from "react-router-dom"
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { authActions } from '../store/auth';
+import { useDispatch } from 'react-redux';
 
 function Login() {
   const[Values,setValues]=useState({
@@ -10,6 +12,7 @@ function Login() {
     password:"",
   });
   const navigate=useNavigate();
+  const dispatch=useDispatch();
   const change=(e)=>{
     const {name,value}=e.target;
     setValues({...Values,[name]:value});
@@ -22,11 +25,17 @@ function Login() {
       }
       else{
         const res=await axios.post("http://localhost:4000/api/v1/sign-in",Values);
-        console.log(res.data);
-        
+        console.log(res);
+        dispatch(authActions.login());
+        dispatch(authActions.changeRole(res.data.role));
+        const {id,role,token}=res.data[1];
+        localStorage.setItem("id",id);
+        localStorage.setItem("token",token);
+        localStorage.setItem("role",role);
+        navigate("/Profile");
       }
     } catch (error) {
-      console.log(error)
+      alert(error.response.data.message);
     }
   }
   return (
