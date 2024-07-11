@@ -14,7 +14,6 @@ function App() {
 
   return (
     <div>
-      <Router>
       <Navbar/>
               <Routes>
                 <Route exact path="/" element={<Home/>}/>
@@ -26,7 +25,6 @@ function App() {
                 <Route path="view-book-details/:id" element={<ViewBookDetails/>} />
               </Routes>
       <Footer/>
-      </Router>
     </div>
   )
 }

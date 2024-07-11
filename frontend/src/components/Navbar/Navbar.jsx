@@ -1,6 +1,8 @@
 import react, { useState } from "react";
 import { Link } from "react-router-dom";
 import { FaGripLines } from "react-icons/fa";
+import {useSelector} from 'react-redux';
+
 const Navbar=()=>{
 
     const links =[
@@ -21,6 +23,11 @@ const Navbar=()=>{
             link:"/Profile"
         },
     ];
+    const isloggedin=useSelector((state)=>state.auth.isloggedin);
+
+    if(isloggedin===false){
+        links.splice(2,2);//removes cart and profile from user 
+    }
 
     const[mobileNav,setMobileNav]=useState("hidden");
     return (
