@@ -35,7 +35,7 @@ const Navbar=()=>{
         <>
     <nav className=" z-50 relative bg-zinc-800 text-white px-8 py-4 flex item-center justify-between">
             <div className="flex gap-2 items-center justify-center">
-                <PiNotebookBold />
+                <PiNotebookBold className="text-3xl text-blue-300"/>
                 <div className="text-2xl font-semibold">BookHeaven</div>
             </div>
             <div className="flex gap-4">

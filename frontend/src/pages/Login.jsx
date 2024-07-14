@@ -27,7 +27,7 @@ function Login() {
         const res=await axios.post("http://localhost:4000/api/v1/sign-in",Values);
         console.log(res);
         dispatch(authActions.login());
-        dispatch(authActions.changeRole(res.data.role));
+        dispatch(authActions.changeRole(res.data[1].role));
         const {id,role,token}=res.data[1];
         localStorage.setItem("id",id);
         localStorage.setItem("token",token);
@@ -35,7 +35,7 @@ function Login() {
         navigate("/Profile");
       }
     } catch (error) {
-      alert(error.response.data.message);
+      alert(error.response.data[0].message);
     }
   }
   return (

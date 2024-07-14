@@ -10,7 +10,7 @@ function AllBooks() {
         const fetch=async()=>{
             const response=await axios.get("http://localhost:4000/api/v1/get-all-books");
             console.log(response.data);
-            setData(response.data.books);
+            setData(response.data.books1);
         };
         fetch();
     },[]);

@@ -1,38 +1,40 @@
 const authenticateToken=require('./userauth');
 const book = require("../models/books");
-const order= require("../models/order");
+const Order= require("../models/order");
 const user = require("../models/user");
 const router = require("express").Router();
 
 //place order
 
-router.post("/place-order",authenticateToken, async(req,res)=>{
+router.post("/place-order", authenticateToken, async (req, res) => {
     try {
-        const {id}=req.headers;
-        const order= req.body;
-
-        for(const orderData of order){
-            const newOrder= new order({user:id,book : orderData._id});
-            const orderDataFronDb = await newOrder.save();
-            await user.findByIdAndUpdate(id,{
-                $push:{cart:orderData._id},
-            });
-            //clearing cart
-            await user.findByIdAndUpdate(id,{
-                $pull:{cart:orderData._id},
-            });
+        const { id } = req.headers;
+        const { order } = req.body;
+        const userOrders =[];
+        //console.log(order);
+        for (const orderData of order) {
+            const newOrder = new Order({ user: id, book: orderData._id,});
+            await newOrder.save();
+            userOrders.push(newOrder);
         }
+        // Clear the cart after processing all orders
+        await user.findByIdAndUpdate(id, {
+            $push: { orders: { $each: userOrders } },
+            $set: { cart: [] },
+        });
+
         return res.json({
-            status:"success",
-            message:"Order Placed Sucessfully",
+            status: "success",
+            message: "Order Placed Successfully",
         });
     } catch (error) {
         console.log(error);
         return res.status(500).json({
-            message:"An Error Occured",
+            message: "An Error Occurred",
         });
     }
 });
+
 
 //get order history of a  particular user
 
@@ -46,7 +48,6 @@ router.get("/get-order-history",authenticateToken, async(req,res)=>{
         });
         const orderData=userData.orders.reverse();
         return res.json({
-            status:"Success",
             data:orderData,
         });
     } catch (error) {

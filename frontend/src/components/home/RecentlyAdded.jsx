@@ -9,7 +9,8 @@ function RecentlyAdded() {
     useEffect(() => {
         const fetch=async()=>{
             const response=await axios.get("http://localhost:4000/api/v1/get-recent-books");
-            setData(response.data.books);
+            //console.log(response)
+            setData(response.data.books1);
         };
         fetch();
     },[]);

@@ -5,11 +5,17 @@ const authenticateToken = require("./userauth");
 router.put("/add-to-cart",authenticateToken,async (req,res)=>{
     try {
         const {bookid,id} = req.headers;
-        const userData=await user.includes(bookid);
+        const userData=await user.findById(id);
+        if(!userData){
+            return res.status(404).json({
+                status: "Failure",
+                message: "User not found"
+            });
+        }
         const isbookfavorite= userData.cart.includes(bookid);
 
-        if(!isbookfavorite){
-            return res.json({
+        if(isbookfavorite){
+            return res.status(400).json({
                 status:"Success",
                 message:"book is already in cart"
             });
@@ -17,7 +23,7 @@ router.put("/add-to-cart",authenticateToken,async (req,res)=>{
         await user.findByIdAndUpdate(id,{
             $push:{cart:bookid},
         });
-        return res.json({
+        return res.status(200).json({
             status:"success",
             message:"Book added to cart",
         });
@@ -32,9 +38,11 @@ router.put("/add-to-cart",authenticateToken,async (req,res)=>{
 //delete from cart
 
 router.put("/remove-from-cart/:bookid",authenticateToken,async (req,res)=>{
-    try{const {bookid}=req.params;
-    const {id}=req.headers;
-    await user.findByIdAndUpdate(id,{
+    try{
+        const {bookid}=req.params;
+        console.log(bookid);
+        const {id}=req.headers;
+        await user.findByIdAndUpdate(id,{
         $pull :{cart:bookid},
     });
     return res.json({

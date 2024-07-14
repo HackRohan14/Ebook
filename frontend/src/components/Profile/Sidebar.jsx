@@ -7,7 +7,7 @@ function Sidebar({data}) {
     
     <div className='bg-zinc-800 p-4 rounded flex flex-col items-center justify-between h-[100%]'>
         <div className='flex items-center flex-col justify-center'>
-                <img src="../src/assets/avatar.png" alt="/" className='h-12vh'/>
+                <img src="../src/assets/avatar.png" alt="/" className='flex flex-col rounded-full'/>
             <p className='mt-3 text-xl text-zinc-100 font-semibold'>
                 {data.username}
             </p>
