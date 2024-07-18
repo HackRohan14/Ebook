@@ -60,34 +60,31 @@ router.get("/get-order-history",authenticateToken, async(req,res)=>{
 
 //admin role
 
-router.get("get-all-order",authenticateToken,async (req,res)=>{
+router.get("/get-all-order", authenticateToken, async (req, res) => {
     try {
-        const userData=await order.find().populate({
-            path:"book"
-        }).populate({
-            path:"user",
-        }).sort({
-            createdAt:-1,
-        });
-
+        const userData = await Order.find()
+            .populate("book")
+            .populate("user")
+            .sort({ createdAt: -1 });
         return res.json({
-            status:"Success",
-            data:userData,
+            status: "Success",
+            data: userData,
         });
     } catch (error) {
-        console.log(error);
+        console.error("Error fetching orders:", error);
         return res.status(500).json({
-            message:"An error Occured",
+            message: "An error occurred",
         });
     }
-})
+});
+
 
 //update order status
 
 router.put("/update-staus/:id",authenticateToken, async(req,res)=>{
     try{
         const {id}=req.params;
-        await order.findByIdAndUpdate(id,{status:req.body.status});
+        await Order.findByIdAndUpdate(id,{status:req.body.status});
         return res.json({
             status:"Success",
             message:"Statu updated Sucessfully",
