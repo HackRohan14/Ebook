@@ -49,11 +49,18 @@ router.put("/update-book",authenticateToken,async (req,res)=>{
     }
 });
 
-router.delete("/delete-book",authenticateToken,async (req,res)=>{
+router.delete("/delete-book/:bookid",authenticateToken,async (req,res)=>{
     try{
         const {id} = req.headers;
-        await user.findByIdAndDelete(id);
+        const user1 = await user.findById(id);
+        if(user1.role!=="admin"){
+            return res.status(400).json({message:"Not Having Authorization(Only admin Is Allowed"});
+        }
+        const {bookid} = req.params;
+        console.log(bookid);
+        await books.findByIdAndDelete(bookid);
         res.status(200).json({message:"Book Deleted Sucessfully"});
+        
     }
     catch(err){
         console.log(err);

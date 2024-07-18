@@ -35,7 +35,7 @@ function Login() {
         navigate("/Profile");
       }
     } catch (error) {
-      alert(error.response.data[0].message);
+      alert("Invalid Credential");
     }
   }
   return (

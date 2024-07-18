@@ -1,14 +1,19 @@
 import React,{useEffect , useState} from 'react'
-import { useParams } from 'react-router-dom';
+import { Outlet, useParams } from 'react-router-dom';
 import axios from "axios";
 import Loader from "../loader/Loader";
 import { GrLanguage } from "react-icons/gr";
 import { FaHeart } from "react-icons/fa";
 import { CiShoppingCart } from "react-icons/ci";
 import { useSelector } from 'react-redux';
+import { TiDelete } from "react-icons/ti";
+import { MdUpdate } from "react-icons/md";
+import {useNavigate} from "react-router-dom";
+import Updatebook from '../../pages/Updatebook';
 
 
 function ViewBookDetails() {
+    const navigate=useNavigate();
     const {id}=useParams();
     console.log(id);
     const [Data,setData]=useState({});
@@ -23,6 +28,39 @@ function ViewBookDetails() {
         }
         fetch();
     },[]);
+
+
+
+    const deletebook = async()=>{
+        try {
+            const response = await axios.delete(`http://localhost:4000/api/v1/delete-book/${id}`,{headers: {
+                id:localStorage.getItem("id"),
+                bookid:id,
+                authorization:`Bearer ${localStorage.getItem("token")}`
+                }
+            });
+            alert(response.data.message);
+            navigate("/all-books");
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+
+    const updatebook = async()=>{
+            navigate(`/view-book-details/update-book-details`)
+            try {
+                const response = await axios.put(`http://localhost:4000/api/v1/update-book/${id}`,{},{headers: {
+                    id:localStorage.getItem("id"),
+                    bookid:id,
+                    authorization:`Bearer ${localStorage.getItem("token")}`
+                    }
+                });
+                alert(response.data.message);
+            } catch (error) {
+                console.log(error);
+            }
+    }
     //console.log(localStorage.getItem("id"));
     const handleFavorites = async()=>{
         try {
@@ -78,11 +116,19 @@ function ViewBookDetails() {
         <div className='bg-zinc-800 rounded p-4 h-[70vh] lg:h-[80vh] sm:w-5/6  w-full lg:w-3/6 flex items-center justify-around gap-1'>
             <img src={Data.image} alt="/" className='h-[50vh] lg:h-[70vh]'/>
             <div className='flex flex-col md:h-[50vh] lg:h-[70vh] sm:justify-start sm:items-start'>
-                {isloggedin && role &&
+                {isloggedin && role==='user'&&
                 <>
                     <button className='bg-white rounded-full text-3xl  p-2 text-red-700 ' onClick={handleFavorites}><FaHeart /></button>
                     <button className='bg-white rounded-full text-3xl p-2 mt-4 text-blue-400' onClick={handleCart}><CiShoppingCart /></button>
                 </>
+                }
+                {
+                    isloggedin && role==='admin' &&
+                    <>
+                    <button className='bg-white rounded-full text-3xl  p-2 text-red-700 ' onClick={deletebook}><TiDelete />
+                    </button>
+                    <button className='bg-white rounded-full text-3xl p-2 mt-4 text-blue-400' onClick={updatebook}><MdUpdate /></button>
+                    </>
                 }
             </div>
         </div>
@@ -98,7 +144,7 @@ function ViewBookDetails() {
                 Price :${Data.price}
             </p>
         </div>
-      
+        <Outlet/>
     </div>
   )
 }

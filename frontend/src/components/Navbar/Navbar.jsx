@@ -23,13 +23,22 @@ const Navbar=()=>{
             title:"profile",
             link:"/Profile"
         },
+        {
+            title:"adminProfile",
+            link:"/Profile"
+        }
     ];
     const isloggedin=useSelector((state)=>state.auth.isLoggedIn);
-
+    const role=useSelector((state)=>state.auth.role);
     if(isloggedin===false){
         links.splice(2,2);//removes cart and profile from user 
     }
-
+    if(isloggedin===true && role==="user"){
+        links.splice(4,1);
+    }
+    if(isloggedin ==true && role==="admin"){
+        links.splice(3,1);//removes profile from admin
+    }
     const[mobileNav,setMobileNav]=useState("hidden");
     return (
         <>
