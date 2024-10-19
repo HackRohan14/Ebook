@@ -5,7 +5,7 @@ import Sidebar from './Sidebar';
 import { Outlet } from 'react-router-dom';
 
 const Settings = () => {
-  const[value,setvalue]=useState({address:""});
+  const[Value,setvalue]=useState({address:" "});
   const[ProfileData,setProfileData]=useState();
   const headers={
     id:localStorage.getItem("id"),
@@ -56,7 +56,7 @@ const Settings = () => {
             </div>
             <div className='mt-4 flex flex-col'>
               <label htmlFor="">Address</label>
-              <textarea name="address" rows="5" value={value.data} placeholder={value.data} className='p-2 rounded bg-zinc-800 mt-2 font-semibold' onChange={change}></textarea>
+              <textarea name="address" rows="5" value={Value.address} placeholder={Value.address} className='p-2 rounded bg-zinc-800 mt-2 font-semibold' onChange={change}></textarea>
             </div>
             <div className='mt-4 flex justify-end'>
               <button className='bg-yellow-500 text-zinc-900 font-semibold px-3 py-2 rounded hover:bg-yellow-400' onClick={submitaddress}>Update</button>

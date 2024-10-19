@@ -22,6 +22,9 @@ function SignUp() {
       }
       else{
         const res=await axios.post("http://localhost:4000/api/v1/sign-up",Values);
+        if(res.status===400){
+          alert("password Should be greater that Five Characters");
+        }
         alert(res.data.message);
         navigate("/Login");
       }

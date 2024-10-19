@@ -3,6 +3,7 @@ const book = require("../models/books");
 const Order= require("../models/order");
 const user = require("../models/user");
 const router = require("express").Router();
+const axios = require('axios');
 
 //place order
 
@@ -81,9 +82,10 @@ router.get("/get-all-order", authenticateToken, async (req, res) => {
 
 //update order status
 
-router.put("/update-staus/:id",authenticateToken, async(req,res)=>{
+router.put("/update-status/:id",authenticateToken, async(req,res)=>{
     try{
         const {id}=req.params;
+        //console.log(id);
         await Order.findByIdAndUpdate(id,{status:req.body.status});
         return res.json({
             status:"Success",
