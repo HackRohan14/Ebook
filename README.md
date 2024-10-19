@@ -1,18 +1,18 @@
 
 # React + Vite
-For simplycity Modified Npm Script
+For simplycity Modified Npm Script<br>
 
-Commands to run The Project:
-Main Directory:
-    cd frontend:
-    npm i
-    npm run dev
-Main Directory:
-    cd backend
-    npm i 
-    npm run dev
+Commands to run The Project:<br>
+Main Directory:<br>
+    cd frontend:<br>
+    npm i<br>
+    npm run dev<br>
+Main Directory:<br>
+    cd backend<br>
+    npm i <br>
+    npm run dev<br>
 
-Use (Npm run dev) for both frontend and Backend
+Use (Npm run dev) for both frontend and Backend<br>
 
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
