@@ -20,7 +20,7 @@ router.put("/addbook-to-favorites", authenticateToken ,async (req,res)=>{
         }
       } catch (error) {
         console.error("Error:", error); // Log the error
-        res.status(500).json({ message: "Internal Server Error" }); // Corrected spelling
+        res.status(500).json({ message: "Internal Server Error" }); 
       }
 });
 
@@ -44,9 +44,5 @@ router.post("/removebook-from-favorites",authenticateToken,async (req,res)=>{
   }
     
 });
-
-
-
-
 
 module.exports=router;

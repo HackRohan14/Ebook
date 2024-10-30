@@ -11,7 +11,7 @@ const Hero = () => {
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
             </p>
             <div className='mt-8'>
-              <Link to="/all-books" className='text-xl lg:text-2xl text-yellow-100 font-semibold border rounded border-yellow-100 px-10 py-3 hover:bg-zinc-800'>Discover Book</Link>
+              <Link to="/all-books" className='text-xl lg:text-2xl text-yellow-100 font-semibold border rounded border-yellow-100 px-10 py-3 hover:bg-zinc-700'>Discover Book</Link>
             </div>
             
         </div>
